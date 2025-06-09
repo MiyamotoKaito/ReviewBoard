@@ -112,6 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376fd875e7d10184286fa06a4cd7f6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PunchInterval: 2
   RightHand: {fileID: 2711219716788440957, guid: 2064f130d291a40428894fa00fefac2c, type: 3}
   LeftHand: {fileID: 8988798638648834133, guid: 868f5a1373db18949966c4cb50c51483, type: 3}
-  mainCamera: {fileID: 0}

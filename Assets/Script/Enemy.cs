@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-
+    public Slider healthSlider;
     public float leftLimit = -3f;        // 左端のX座標
     public float rightLimit = 3f;        // 右端のX座標
     public float patrolDuration = 2f;    // 片道にかかる時間（秒）
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Move();
+        clear();
     }
 
     private void Move()
@@ -75,4 +77,13 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void clear()
+    {
+        if (healthSlider.value == 0f)
+        {
+            Destroy(gameObject);
+            Time.timeScale = 0f;
+        }
+
+    }
 }
