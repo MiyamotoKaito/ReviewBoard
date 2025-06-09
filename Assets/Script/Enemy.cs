@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEditor;
+using UnityEngine;
 
-public class EnemyPatrol : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     public float leftLimit = -3f;        // 左端のX座標
@@ -10,7 +12,16 @@ public class EnemyPatrol : MonoBehaviour
     private float timer = 0f;
     private bool movingRight = true;
 
+    private void Start()
+    {
+
+    }
     void Update()
+    {
+        Move();
+    }
+
+    private void Move()
     {
         timer += Time.deltaTime;
 
@@ -34,5 +45,34 @@ public class EnemyPatrol : MonoBehaviour
             timer = 0f;
             movingRight = !movingRight;
         }
+
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Punch"))
+        {
+            Debug.Log("当たった");
+            SpriteRenderer Colors = GetComponent<SpriteRenderer>();
+            if (Colors != null)
+            {
+                Debug.Log("色を変更中！");
+                StartCoroutine(FlashRed(Colors));
+            }
+        }
+    }
+
+    private IEnumerator FlashRed(SpriteRenderer Colors)
+    {
+        Color originalcolor = Colors.color;
+
+        Colors.color = new Color(1f, 0.3f, 0.3f, originalcolor.a);
+
+        yield return new WaitForSeconds(0.1f);
+
+        Colors.color = originalcolor;
+        
+
+    }
+
 }
