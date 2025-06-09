@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField]GameObject DeathgameObject;
     public Slider healthSlider;
     public float leftLimit = -3f;        // 左端のX座標
     public float rightLimit = 3f;        // 右端のX座標
@@ -13,9 +14,9 @@ public class Enemy : MonoBehaviour
     private float timer = 0f;
     private bool movingRight = true;
 
-    private void Start()
+    void Start()
     {
-
+        
     }
     void Update()
     {
@@ -85,5 +86,10 @@ public class Enemy : MonoBehaviour
             Time.timeScale = 0f;
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(DeathgameObject, transform.position, Quaternion.identity);
     }
 }
