@@ -22,7 +22,7 @@ public class HandController : MonoBehaviour
     void Update()
     {
         HandMove();
-        
+
     }
 
     public void HandMove()
@@ -35,7 +35,7 @@ public class HandController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy")) 
         {
             spawnPosition = collision.transform.position;
-            Instantiate(HandHitPrefab, spawnPosition, Quaternion.identity); // Õ“ËˆÊ’u‚ÉV‚µ‚¢prefab‚ğ¶¬
+            Instantiate(HandHitPrefab, spawnPosition, Quaternion.identity); // Õ“ËˆÊ’u‚ÉHandHitprefab‚ğ¶¬
         }
         Destroy(gameObject);
 

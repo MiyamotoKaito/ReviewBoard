@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f886fc8f2201e439b15f0e4ad58eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeathgameObject: {fileID: 2833914669213480492, guid: 14f5db89229903a408d33fdd8e715aa4, type: 3}
+  healthSlider: {fileID: 0}
   leftLimit: -3
   rightLimit: 3
   patrolDuration: 2
@@ -159,4 +161,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7268a1ab6c8188d4da779154c6ea3736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 0}
+  healthSlider: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]GameObject DeathgameObject;
+    [SerializeField] GameObject DeathgameObject;
     public Slider healthSlider;
     public float leftLimit = -3f;        // 左端のX座標
     public float rightLimit = 3f;        // 右端のX座標
@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        
+ 
     }
     void Update()
     {
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         Colors.color = originalcolor;
-        
+
 
     }
 
@@ -82,14 +82,24 @@ public class Enemy : MonoBehaviour
     {
         if (healthSlider.value == 0f)
         {
-            Destroy(gameObject);
-            Time.timeScale = 0f;
+            Die();
+
         }
 
     }
 
-    private void OnDestroy()
+    private void Die()
     {
+        GameObject[] handhit = GameObject.FindGameObjectsWithTag("Punch"); //"Punch" タグが付いたすべてのGameObjectを配列として取得
+        foreach (GameObject hit in handhit)
+        {
+            Destroy(hit);
+        }
         Instantiate(DeathgameObject, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+        Time.timeScale = 0f;
     }
+
+
+
 }
