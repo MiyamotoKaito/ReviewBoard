@@ -32,12 +32,13 @@ public class HandController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null) 
+        if (collision.gameObject.CompareTag("Enemy")) 
         {
             spawnPosition = collision.transform.position;
-            Instantiate(HandHitPrefab, spawnPosition, Quaternion.identity);
-            Destroy(gameObject);
+            Instantiate(HandHitPrefab, spawnPosition, Quaternion.identity); // Õ“ËˆÊ’u‚ÉV‚µ‚¢prefab‚ğ¶¬
         }
+        Destroy(gameObject);
+
     }
 
 
