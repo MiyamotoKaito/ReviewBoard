@@ -1,31 +1,38 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    public float moveSpeed = 2f;         // ˆÚ“®‘¬“x
-    public float leftLimit = -3f;        // ¶’[‚ÌXÀ•W
-    public float rightLimit = 3f;        // ‰E’[‚ÌXÀ•W
 
+    public float leftLimit = -3f;        // å·¦ç«¯ã®Xåº§æ¨™
+    public float rightLimit = 3f;        // å³ç«¯ã®Xåº§æ¨™
+    public float patrolDuration = 2f;    // ç‰‡é“ã«ã‹ã‹ã‚‹æ™‚é–“ï¼ˆç§’ï¼‰
+
+    private float timer = 0f;
     private bool movingRight = true;
 
     void Update()
     {
-        // ˆÚ“®ˆ—
-        if (movingRight)
+        timer += Time.deltaTime;
+
+        float t = timer / patrolDuration;
+
+        // ç·©æ€¥ã‚’ã¤ã‘ã¦è£œé–“ï¼ˆ0ã€œ1 â†’ 0ã€œ1ï¼‰
+        float easedT = Mathf.SmoothStep(0f, 1f, t);
+
+        // ç·šå½¢è£œé–“
+        float newX = Mathf.Lerp(
+            movingRight ? leftLimit : rightLimit,
+            movingRight ? rightLimit : leftLimit,
+            easedT
+        );
+
+        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+
+        // å¾€å¾©åˆ‡ã‚Šæ›¿ãˆ
+        if (timer >= patrolDuration)
         {
-            transform.position += Vector3.right * moveSpeed * Time.deltaTime;
-            if (transform.position.x >= rightLimit)
-            {
-                movingRight = false;
-            }
-        }
-        else
-        {
-            transform.position += Vector3.left * moveSpeed * Time.deltaTime;
-            if (transform.position.x <= leftLimit)
-            {
-                movingRight = true;
-            }
+            timer = 0f;
+            movingRight = !movingRight;
         }
     }
 }
