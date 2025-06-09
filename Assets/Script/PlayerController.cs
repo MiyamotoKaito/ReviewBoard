@@ -15,12 +15,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         Attack();
     }
-
 
     private void Attack()
     {
@@ -31,7 +29,6 @@ public class PlayerController : MonoBehaviour
             mousePos.z = 10f;
             mousePos.y = -2f;
 
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
             Instantiate(RightHand, worldPos, Quaternion.identity);
         }
 
@@ -42,7 +39,6 @@ public class PlayerController : MonoBehaviour
             mousePos.z = 10f;
             mousePos.y = -2f;
 
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
             Instantiate(LeftHand, worldPos, Quaternion.identity);
         }
     }
