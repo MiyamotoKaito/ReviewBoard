@@ -4,7 +4,7 @@ using UnityEditor.Purchasing;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonAnimation: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Start is called before the first frame update
     private Animator animator;

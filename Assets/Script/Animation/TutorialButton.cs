@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;//シーン切り替えに必要
 
-public class TutorialButtom : MonoBehaviour
+public class TutorialButton : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
