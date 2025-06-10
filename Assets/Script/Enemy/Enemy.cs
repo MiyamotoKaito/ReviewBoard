@@ -3,25 +3,27 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject DeathgameObject;
+
     public Slider healthSlider;
     public float leftLimit = -3f;        // 左端のX座標
     public float rightLimit = 3f;        // 右端のX座標
     public float patrolDuration = 2f;    // 片道にかかる時間（秒）
-
     private float timer = 0f;
+
     private bool movingRight = true;
 
     void Start()
     {
- 
+
     }
     void Update()
     {
         Move();
-        clear();
+        Clear();
     }
 
     private void Move()
@@ -78,12 +80,12 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void clear()
+    private void Clear()
     {
         if (healthSlider.value == 0f)
         {
             Die();
-
+            Time.timeScale = 0f;
         }
 
     }
@@ -97,9 +99,7 @@ public class Enemy : MonoBehaviour
         }
         Instantiate(DeathgameObject, transform.position, Quaternion.identity);
         Destroy(gameObject);
-        Time.timeScale = 0f;
+
     }
-
-
 
 }
