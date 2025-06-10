@@ -59,11 +59,15 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("当たった");
             SpriteRenderer Colors = GetComponent<SpriteRenderer>();
+
+
             if (Colors != null)
             {
                 Debug.Log("色を変更中！");
                 StartCoroutine(FlashRed(Colors));
             }
+
+
         }
     }
 
@@ -86,6 +90,7 @@ public class Enemy : MonoBehaviour
         {
             Die();
             Time.timeScale = 0f;
+            Cursor.visible = true;
         }
 
     }
