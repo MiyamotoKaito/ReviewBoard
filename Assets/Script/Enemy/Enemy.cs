@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private float timer = 0f;
 
     private bool movingRight = true;
+    private bool isBattleStarted = false;
 
     void Start()
     {
@@ -22,8 +23,13 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
+        if (!isBattleStarted)
+        {
+            return;
+        }
         Move();
         Clear();
+
     }
 
     private void Move()
@@ -107,4 +113,8 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void StartBattle()
+    {
+        isBattleStarted = true;
+    }
 }
