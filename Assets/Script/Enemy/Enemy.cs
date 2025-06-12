@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject DeathgameObject;
+    [SerializeField] GameObject EnemyAttackObject;
+    [SerializeField] float AttackTimer = 1.0f;
+    [SerializeField] float AttackCooldown = 2f;
 
-    public Slider healthSlider;
-    public float leftLimit = -3f;        // 左端のX座標
-    public float rightLimit = 3f;        // 右端のX座標
-    public float patrolDuration = 2f;    // 片道にかかる時間（秒）
+    public Slider healthSlider;            //HPバー
+    public float leftLimit = -5.0f;        // 左端のX座標
+    public float rightLimit = 5.0f;        // 右端のX座標
+    public float patrolDuration = 2.0f;    // 片道にかかる時間（秒）
     private float timer = 0f;
 
     private bool movingRight = true;
@@ -35,6 +38,7 @@ public class Enemy : MonoBehaviour
     private void Move()
     {
         timer += Time.deltaTime;
+        AttackTimer += Time.deltaTime;
 
         float t = timer / patrolDuration;
 
@@ -57,6 +61,11 @@ public class Enemy : MonoBehaviour
             movingRight = !movingRight;
         }
 
+        if (AttackTimer > AttackCooldown)
+        {
+            Instantiate(EnemyAttackObject, transform.position, Quaternion.identity);
+            AttackTimer = 0f;//タイマーリセット
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
