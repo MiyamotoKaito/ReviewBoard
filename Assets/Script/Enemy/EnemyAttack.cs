@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] float TargetAttackSpeed = 1.0f;
+    [SerializeField] float TargetAttackSpeed = 0f;
     private Rigidbody2D rb;
     void Start()
     {
@@ -17,6 +17,7 @@ public class EnemyAttack : MonoBehaviour
     {
         Attack();
         Move();
+        Destroy(gameObject,10f);
     }
 
     private void Attack()
