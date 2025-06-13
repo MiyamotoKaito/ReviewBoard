@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.ObjectModel;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -18,6 +19,15 @@ public class PlayerHealth : MonoBehaviour
     public void Start()
     {
         SetGauge(1.0f);
+        PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Update()
+    {
+        if (currentRate <= debugDamageRate)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
     public void SetGauge(float targetRate)
     {

@@ -18,6 +18,10 @@ public class EnemyAttack : MonoBehaviour
         Attack();
         Move();
         Destroy(gameObject,10f);
+        if (Time.timeScale == 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Attack()
