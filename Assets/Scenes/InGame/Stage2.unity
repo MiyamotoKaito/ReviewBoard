@@ -1760,6 +1760,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      propertyPath: leftLimit
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      propertyPath: rightLimit
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      propertyPath: patrolDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: DeathgameObject
       value: 
       objectReference: {fileID: 3798547239581351988, guid: ee9cedddf5720494e99912c7feef5510, type: 3}

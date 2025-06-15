@@ -70,6 +70,6 @@ public class DialogManager3 : MonoBehaviour
         inDialogue = false;
         Cursor.visible = false;
 
-        FindObjectOfType<Enemy>().StartBattle();
+        FindObjectOfType<Enemy3>().StartBattle();
     }
 }

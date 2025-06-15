@@ -11,7 +11,7 @@ public class DialogManager2 : MonoBehaviour
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
     [SerializeField] private string[] dialogueLines;
-    [SerializeField] private string characterName = "îEé“";
+    [SerializeField] private string characterName = "êÊê∂";
 
     private int currentLines = 0;
     private bool inDialogue = true;
