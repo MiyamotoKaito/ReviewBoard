@@ -4,7 +4,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogManager : MonoBehaviour
+public class DialogManager2 : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private GameObject dialogPanel;
@@ -70,6 +70,6 @@ public class DialogManager : MonoBehaviour
         inDialogue = false;
         Cursor.visible = false;
 
-        FindObjectOfType<Enemy>().StartBattle();
+        FindObjectOfType<Enemy2>().StartBattle();
     }
 }

@@ -9,7 +9,7 @@ public class EnemyHealth2 : MonoBehaviour
     public Slider healthSlider;
     void Start()
     {
-        healthSlider.value = 100f;
+        healthSlider.value = 300f;
     }
 
     // Update is called once per frame

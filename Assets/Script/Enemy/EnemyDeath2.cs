@@ -16,7 +16,7 @@ public class EnemyDeath2 : MonoBehaviour
         //敵を倒したら次のステージのボタンとタイトルボタンを表示
         if (enemyText != null)
         {
-            enemyText.text = "ぐはっ！！";
+            enemyText.text = "天晴！！";
         }
         NextStageButton.onClick.AddListener(() => OnclickNextStageUI());
         TitleButton.onClick.AddListener(() => OnclickTitleUI());
@@ -43,7 +43,7 @@ public class EnemyDeath2 : MonoBehaviour
     private void OnclickNextStageUI()
     {
         Time.timeScale = 1f;
-        int NextStage = SceneManager.GetActiveScene().buildIndex + 3;
+        int NextStage = SceneManager.GetActiveScene().buildIndex + 2;
         SceneManager.LoadScene(NextStage);
     }
 
