@@ -18,15 +18,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void Start()
     {
+        m_health.gameObject.SetActive(false); m_burn.gameObject.SetActive(false);
         SetGauge(1.0f);
         PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Update()
     {
+
+
         if (currentRate <= debugDamageRate)
         {
             SceneManager.LoadScene("GameOver");
+        }
+
+        if (Time.timeScale == 1f)
+        {
+            m_health.gameObject.SetActive(true); m_burn.gameObject.SetActive(true);
         }
     }
     public void SetGauge(float targetRate)
@@ -47,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Debug.Log("aaa");
+
             TakeDamage(debugDamageRate);
         }
     }

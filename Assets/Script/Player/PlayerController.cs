@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(1))//左クリックで左手を出現させる
             {
                 punchTimer = 0f;
-                Debug.Log("痛そう");
+
                 Vector3 mousePos = Input.mousePosition;
                 mousePos.z = 10f;
                 mousePos.y = -2f;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 punchTimer = 0f;
-                Debug.Log("痛いぜ");
+
                 Vector3 mousePos = Input.mousePosition;
                 mousePos.z = 10f;
                 mousePos.y = -2f;
