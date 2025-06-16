@@ -72,13 +72,11 @@ public class Enemy2 : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Punch"))
         {
-            Debug.Log("当たった");
             SpriteRenderer Colors = GetComponent<SpriteRenderer>();
 
 
             if (Colors != null)
             {
-                Debug.Log("色を変更中！");
                 StartCoroutine(FlashRed(Colors));
             }
 
