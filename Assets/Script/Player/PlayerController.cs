@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,23 +12,35 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;
     
     private float punchTimer = 0f;
-
+    private float punchTimer2 = 0f;
 
     void Start()
     {
-        
+        if (!mainCamera) //もし入れ忘れたらメインカメラを入れる
+        {
+            mainCamera = Camera.main;
+            Debug.LogWarning($"{name}の{nameof(mainCamera)}がアサインされていませんでした");
+        }
+
+        punchTimer2 = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        punchTimer += Time.deltaTime; 
         Attack();
     }
 
 
     private void Attack()
     {
+        if (punchTimer2 <= Time.time)
+        {
+           // Debug.Log("クールダウンリセット");
+            punchTimer2 = Time.time + punchCooldown;
+        }
+
+        punchTimer += Time.deltaTime;
         if (punchTimer >= punchCooldown) // クールタイム経過してるか
         {
             if (Input.GetMouseButtonDown(1))//左クリックで左手を出現させる

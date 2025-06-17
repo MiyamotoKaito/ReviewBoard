@@ -23,14 +23,14 @@ public class EnemyHealth2 : MonoBehaviour
     public Slider healthSlider;
     void Start()
     {
-        healthSlider.value = 300f;
+        healthSlider.value = 200f;
         dialogPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!inDialogue && healthSlider.value <= 150)
+        if (!inDialogue && healthSlider.value <= 100f)
         {
             inDialogue = true;
             StartCoroutine(HandleDialogue());

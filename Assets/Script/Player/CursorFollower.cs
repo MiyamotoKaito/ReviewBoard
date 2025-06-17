@@ -9,6 +9,7 @@ public class CursorFollower : MonoBehaviour
     {
         // 標準カーソルを非表示にする
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()

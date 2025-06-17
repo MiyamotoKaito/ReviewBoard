@@ -12,8 +12,8 @@ public class Enemy3 : MonoBehaviour
     [SerializeField] float AttackCooldown = 2f;
 
     public Slider healthSlider;            //HPバー
-    public float leftLimit = -5.0f;        // 左端のX座標
-    public float rightLimit = 5.0f;        // 右端のX座標
+    public float leftLimit = -9.0f;        // 左端のX座標
+    public float rightLimit = 9.0f;        // 右端のX座標
     public float patrolDuration = 2.0f;    // 片道にかかる時間（秒）
     private float timer = 0f;
 
