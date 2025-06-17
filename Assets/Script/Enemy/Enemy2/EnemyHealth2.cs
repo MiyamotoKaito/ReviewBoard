@@ -18,86 +18,60 @@ public class EnemyHealth2 : MonoBehaviour
     [SerializeField] private string characterName = "先生";
 
     private int currentLines = 0;
-    private bool inDialogue = true;
+    private bool inDialogue = false;
 
     public Slider healthSlider;
     void Start()
     {
         healthSlider.value = 300f;
+        dialogPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        AttackTimer += Time.deltaTime;
-
-        if (healthSlider.value <= 150)
+        if (!inDialogue && healthSlider.value <= 150)
         {
-            Time.timeScale = 0f;
-
-                StartDialogue();
-
-
-                if (inDialogue && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
-                {
-                    DisplayNextLine();
-
-
-                    if (AttackTimer > AttackCooldown)
-                    {
-                        Vector3 ShurikenPosition1 = new Vector3(-18f, 16f, 0f);
-                        Vector3 ShurikenPosition2 = new Vector3(18f, 16f, 0f);
-                        Instantiate(LeftShuriken, ShurikenPosition1, Quaternion.identity);
-                        Instantiate(RightShuriken, ShurikenPosition2, Quaternion.identity);
-                        AttackTimer = 0f;//タイマーリセット
-                    }
-                }
-
-            
+            inDialogue = true;
+            StartCoroutine(HandleDialogue());
         }
     }
 
-
-
-    public void StartDialogue()
+    IEnumerator HandleDialogue()
     {
-        dialogPanel.SetActive(true);
         Time.timeScale = 0f;
-        nameText.text = characterName;
-        currentLines = 0;
-        dialogText.text = dialogueLines[currentLines];
-        inDialogue = true;
-        Cursor.visible = false;
-    }
-    /// <summary>
-    /// 次の会話に切り替えるメソッド
-    /// </summary>
-    public void DisplayNextLine()
-    {
-        currentLines++;
-        if (currentLines >= dialogueLines.Length)
+        dialogPanel.SetActive(true);
+        nameText.gameObject.SetActive(true);
+        dialogText.gameObject.SetActive(true);
+        nameText.text = "忍者";
+
+        for (int i = 1; i < dialogueLines.Length; i++)
         {
-            EndDialogue();
+            dialogText.text = dialogueLines[i];
+
+            // 入力があるまで待機（スペースか左クリック）
+            yield return new WaitUntil(() =>Input.GetKeyDown(KeyCode.Space)||Input.GetMouseButtonDown(0));
+
+            // 入力が離されるまで待機（押しっぱなし防止）
+            yield return new WaitUntil(() => !Input.GetKeyDown(KeyCode.Space)||!Input.GetMouseButtonDown(0));
         }
 
-        else
-        {
-            dialogText.text = dialogueLines[currentLines];
-        }
+        Endialogue();
+
     }
-    /// <summary>
-    /// 会話を終了させるメソッド
-    /// </summary>
-    public void EndDialogue()
+
+    private void Endialogue()
     {
         dialogPanel.SetActive(false);
         nameText.gameObject.SetActive(false);
         dialogText.gameObject.SetActive(false);
         Time.timeScale = 1f;
-        inDialogue = false;
-        Cursor.visible = false;
 
-        FindObjectOfType<Enemy2>().StartBattle();
+        //バトル再開
+        FindAnyObjectByType <Enemy2>().StartBattle();
+
+        Instantiate(LeftShuriken, new Vector3(-18f, 16f, 0f), Quaternion.identity);
+        Instantiate(RightShuriken, new Vector3(18f, 16f, 0f), Quaternion.identity);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

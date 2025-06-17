@@ -16,7 +16,8 @@ public class LeftShuriken : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.AddForce(Vector2.right * m_moveSpeed, ForceMode2D.Impulse);
+        Vector2 force = new Vector2(1f, -1f).normalized * m_moveSpeed;
+        rb.AddForce(force, ForceMode2D.Impulse);
         transform.Rotate(0f, 0f, m_rotateSpeed * Time.deltaTime);
     }
 }

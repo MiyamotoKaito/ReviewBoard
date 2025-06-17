@@ -8,15 +8,17 @@ public class RightShuriken : MonoBehaviour
     [SerializeField] float m_rotateSpeed;
 
     Rigidbody2D rb;
-    void Start()
+    public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        rb.AddForce(Vector2.left * m_moveSpeed, ForceMode2D.Impulse);
+        Vector2 force = new Vector2(-1f, -1f).normalized * m_moveSpeed;
+        rb.AddForce(force, ForceMode2D.Impulse);
         transform.Rotate(0f, 0f, -m_rotateSpeed * Time.deltaTime);
     }
 }
