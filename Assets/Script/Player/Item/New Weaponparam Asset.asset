@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: New Weaponparam Asset
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponparamAsset
+  WeaponsparamList:
+  - WeaponName: Punch
+    Weapondamage: 10
+    WeaponpPrefab: {fileID: 5515733383188628450, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
+    WeaponHitPrefab: {fileID: 8988798638648834133, guid: 868f5a1373db18949966c4cb50c51483, type: 3}
+  - WeaponName: shoe
+    Weapondamage: 15
+    WeaponpPrefab: {fileID: 5515733383188628450, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
+    WeaponHitPrefab: {fileID: 8988798638648834133, guid: 868f5a1373db18949966c4cb50c51483, type: 3}
+  - WeaponName: kunai
+    Weapondamage: 20
+    WeaponpPrefab: {fileID: 5515733383188628450, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
+    WeaponHitPrefab: {fileID: 8988798638648834133, guid: 868f5a1373db18949966c4cb50c51483, type: 3}
