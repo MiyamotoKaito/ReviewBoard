@@ -32,7 +32,7 @@ public class EnemyAttack2 : MonoBehaviour
     private void Move()
     {
         rb.AddForce(Vector2.down * TargetAttackSpeed, (ForceMode2D.Impulse));
-        transform.Rotate(0f, 0f, 30f * Time.deltaTime);
+        transform.Rotate(0f, 0f, 0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

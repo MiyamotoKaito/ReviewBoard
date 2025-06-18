@@ -16,6 +16,6 @@ public class GameStartButton: MonoBehaviour
 
     private void Push()
     {
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("GameSelect");
     }
 }

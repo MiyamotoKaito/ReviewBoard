@@ -291,7 +291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &541794077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +497,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &681545078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3504022567961387849, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+  m_PrefabInstance: {fileID: 8481847184786136992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &681545084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681545078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a441e576d514394eb4c77c84cc34248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 314628371156952028, guid: 7c7c3b66581c7614c9353726250ba622, type: 3}
+  interval: 1
+  initialDelay: 0
 --- !u!1 &707157452
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,6 +1760,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1187197237}
     - target: {fileID: 5283541398812467855, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      propertyPath: Leftdanger
+      value: 
+      objectReference: {fileID: 314628371156952028, guid: 7c7c3b66581c7614c9353726250ba622, type: 3}
+    - target: {fileID: 5283541398812467855, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: dialogText
       value: 
       objectReference: {fileID: 1919885351}
@@ -1747,6 +1771,10 @@ PrefabInstance:
       propertyPath: AttackTimer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5283541398812467855, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      propertyPath: Rightdanger
+      value: 
+      objectReference: {fileID: 314628371156952028, guid: 7c7c3b66581c7614c9353726250ba622, type: 3}
     - target: {fileID: 5283541398812467855, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: dialogPanel
       value: 
@@ -1805,11 +1833,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: leftLimit
-      value: -9
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: rightLimit
-      value: 9
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9077939714939065508, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
       propertyPath: patrolDuration
@@ -1830,7 +1858,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3504022567961387849, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 681545084}
   m_SourcePrefab: {fileID: 100100000, guid: 455ffe9c6f7393b4a978b7cbc81f772e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

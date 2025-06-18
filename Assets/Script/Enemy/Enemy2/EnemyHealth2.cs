@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 using UnityEngine.UI;
 
 public class EnemyHealth2 : MonoBehaviour
@@ -11,6 +12,8 @@ public class EnemyHealth2 : MonoBehaviour
     [SerializeField] float AttackCooldown = 2f;
     [SerializeField] GameObject RightShuriken;
     [SerializeField] GameObject LeftShuriken;
+    [SerializeField] GameObject Rightdanger;
+    [SerializeField] GameObject Leftdanger;
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
@@ -25,14 +28,21 @@ public class EnemyHealth2 : MonoBehaviour
     {
         healthSlider.value = 200f;
         dialogPanel.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        var worldPosR = new Vector3(10.0f, 3.7f, 0f);
+        var worldPosL = new Vector3(-10.0f, 3.7f, 0f);
+        Quaternion rotL = Quaternion.Euler(0, 0, -45);  
+        Quaternion rotR = Quaternion.Euler(0, 0, -135);
         if (!inDialogue && healthSlider.value <= 100f)
         {
             inDialogue = true;
+            Instantiate(Rightdanger, worldPosR, rotR);
+            Instantiate(Leftdanger, worldPosL, rotL);
             StartCoroutine(HandleDialogue());
         }
     }

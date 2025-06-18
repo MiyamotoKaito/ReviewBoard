@@ -27,6 +27,6 @@ EditorBuildSettings:
     path: Assets/Scenes/OutGame/GameClear.unity
     guid: 8b0696308b4121a448c759fcc438b1bb
   - enabled: 1
-    path: Assets/Scenes/OutGame/GameSelectScene.unity
+    path: Assets/Scenes/OutGame/GameSelect.unity
     guid: 136801b744e64da4e9b3cb0107fee816
   m_configObjects: {}
