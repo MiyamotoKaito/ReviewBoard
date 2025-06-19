@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -37,7 +38,7 @@ public class EnemyHealth2 : MonoBehaviour
     {
         var worldPosR = new Vector3(10.0f, 3.7f, 0f);
         var worldPosL = new Vector3(-10.0f, 3.7f, 0f);
-        Quaternion rotL = Quaternion.Euler(0, 0, -45);  
+        Quaternion rotL = Quaternion.Euler(0, 0, -45);
         Quaternion rotR = Quaternion.Euler(0, 0, -135);
         if (!inDialogue && healthSlider.value <= 100f)
         {
@@ -54,17 +55,18 @@ public class EnemyHealth2 : MonoBehaviour
         dialogPanel.SetActive(true);
         nameText.gameObject.SetActive(true);
         dialogText.gameObject.SetActive(true);
+        NextTalk.text = NextTalk.text;
         nameText.text = "忍者";
 
-        for (int i = 1; i < dialogueLines.Length; i++)
+        for (int i = 0; i < dialogueLines.Length; i++)
         {
             dialogText.text = dialogueLines[i];
 
             // 入力があるまで待機（スペースか左クリック）
-            yield return new WaitUntil(() =>Input.GetKeyDown(KeyCode.Space)||Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
             // 入力が離されるまで待機（押しっぱなし防止）
-            yield return new WaitUntil(() => !Input.GetKeyDown(KeyCode.Space)||!Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => !Input.GetKeyDown(KeyCode.Space));
         }
 
         Endialogue();
@@ -76,13 +78,19 @@ public class EnemyHealth2 : MonoBehaviour
         dialogPanel.SetActive(false);
         nameText.gameObject.SetActive(false);
         dialogText.gameObject.SetActive(false);
-        nameText.text = characterName;
         NextTalk.gameObject.SetActive(false);
         Time.timeScale = 1f;
 
         //バトル再開
-        FindAnyObjectByType <Enemy2>().StartBattle();
+        FindAnyObjectByType<Enemy2>().StartBattle();
 
+        var sr = GetComponent<SpriteRenderer>();
+        sr.DOFade(0f, 1.0f).SetLoops(-1, LoopType.Yoyo);//忍者の点滅
+
+        var greenImage = healthSlider.fillRect.GetComponent<Image>();
+        greenImage.DOFade(0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo);//HPバーの点滅（緑）
+
+        //クナイ投げ
         Instantiate(LeftShuriken, new Vector3(-18f, 16f, 0f), Quaternion.identity);
         Instantiate(RightShuriken, new Vector3(18f, 16f, 0f), Quaternion.identity);
     }

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEditor;
+using DG.Tweening;
 
 public class SelectButton : MonoBehaviour
 {
@@ -11,27 +9,25 @@ public class SelectButton : MonoBehaviour
     [SerializeField] Button stage1Button;
     [SerializeField] Button stage2Button;
     [SerializeField] Button stage3Button;
+    [SerializeField] Image fadePanel; // フェードアウト用
+    [SerializeField] float fadeDuration = 1f;
     void Start()
     {
-        stage1Button.onClick.AddListener(() => Stage1UI());
-        stage2Button.onClick.AddListener(() => Stage2UI());
-        stage3Button.onClick.AddListener(() => Stage3UI());
+        stage1Button.onClick.AddListener(() => FadeAndLoad("Stage1"));
+        stage2Button.onClick.AddListener(() => FadeAndLoad("Stage2"));
+        stage3Button.onClick.AddListener(() => FadeAndLoad("Stage3"));
+
+        // 最初は透明
+        fadePanel.color = new Color(0, 0, 0, 0);
+        fadePanel.gameObject.SetActive(true); //← SetActive(true) にしておかないとフェードできない
     }
 
-    // Update is called once per frame
-
-
-    private void Stage1UI()
+    private void FadeAndLoad(string sceneName)
     {
-        SceneManager.LoadScene("Stage1");
-    }
-    private void Stage2UI()
-    {
-        SceneManager.LoadScene("Stage2");
-    }
-
-    private void Stage3UI()
-    {
-        SceneManager.LoadScene("Stage3");
+        //フェードアウト
+        fadePanel.DOFade(1f, fadeDuration).SetUpdate(true).OnComplete(() =>
+        {
+            SceneManager.LoadScene(sceneName);
+        });
     }
 }

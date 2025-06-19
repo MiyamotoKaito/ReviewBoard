@@ -1,21 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using UnityEngine.SceneManagement;//シーン切り替えに必要
 
-public class GameStartButton: MonoBehaviour
+public class GameStartButton : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] Button SelectButton;
+    [SerializeField] Button TutorialButton;
+    [SerializeField] Image fadePanel; // フェードアウト用
+    [SerializeField] float fadeDuration = 1f;
     void Start()
     {
-        this.GetComponent<Button>().onClick.AddListener(Push);
-    }   
+        SelectButton.onClick.AddListener(() => FadeAndLoad("Tutorial"));
+        SelectButton.onClick.AddListener(() => FadeAndLoad("GameSelect"));
 
-    // Update is called once per frame
+        // 最初は透明
+        fadePanel.color = new Color(0, 0, 0, 0);
+        fadePanel.gameObject.SetActive(true); //← SetActive(true) にしておかないとフェードできない
+    }
 
-    private void Push()
+    private void FadeAndLoad(string sceneName)
     {
-        SceneManager.LoadScene("GameSelect");
+        fadePanel.DOFade(1f, fadeDuration).SetUpdate(true).OnComplete(() =>
+        {
+            SceneManager.LoadScene(sceneName);
+        });
     }
 }

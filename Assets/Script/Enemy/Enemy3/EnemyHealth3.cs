@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,6 @@ public class EnemyHealth3 : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] float AttackTimer = 1.0f;
     [SerializeField] float AttackCooldown = 2f;
-    //[SerializeField] GameObject RightShuriken;
-    //[SerializeField] GameObject LeftShuriken;
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
@@ -23,6 +22,12 @@ public class EnemyHealth3 : MonoBehaviour
     {
         healthSlider.value = 300f;
         dialogPanel.SetActive(false);
+
+        if(healthSlider.value <= 100 ) 
+        {
+            var greenImage = healthSlider.fillRect.GetComponent<Image>();
+            greenImage.DOFade(0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo);//HPバーの点滅（緑）
+        }
     }
 
     // Update is called once per frame
@@ -44,15 +49,15 @@ public class EnemyHealth3 : MonoBehaviour
         dialogText.gameObject.SetActive(true);
         nameText.text = "トレーナー";
 
-        for (int i = 1; i < dialogueLines.Length; i++)
+        for (int i = 0; i < dialogueLines.Length; i++)
         {
             dialogText.text = dialogueLines[i];
 
             // 入力があるまで待機（スペースか左クリック）
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
 
             // 入力が離されるまで待機（押しっぱなし防止）
-            yield return new WaitUntil(() => !Input.GetKeyDown(KeyCode.Space) || !Input.GetMouseButtonDown(0));
+            yield return new WaitUntil(() => !Input.GetKeyDown(KeyCode.Space));
         }
 
         Endialogue();
