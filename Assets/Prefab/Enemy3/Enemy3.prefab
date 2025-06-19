@@ -440,6 +440,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1572a941970549048ad2fc971ac26b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackTimer: 1
+  AttackCooldown: 2
+  dialogPanel: {fileID: 0}
+  nameText: {fileID: 0}
+  dialogText: {fileID: 0}
+  dialogueLines: []
+  characterName: "\u5148\u751F"
   healthSlider: {fileID: 8262411911328264175}
 --- !u!1 &8640178459868580434
 GameObject:

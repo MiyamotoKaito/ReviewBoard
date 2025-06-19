@@ -13,10 +13,10 @@ public class EnemyHealth3 : MonoBehaviour
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
+    [SerializeField] private Text NextTalk;
     [SerializeField] private string[] dialogueLines;
     [SerializeField] private string characterName = "êÊê∂";
 
-    private int currentLines = 0;
     private bool inDialogue = false;
     public Slider healthSlider;
     void Start()
@@ -64,6 +64,7 @@ public class EnemyHealth3 : MonoBehaviour
         dialogPanel.SetActive(false);
         nameText.gameObject.SetActive(false);
         dialogText.gameObject.SetActive(false);
+        NextTalk.gameObject.SetActive(false);
         Time.timeScale = 1f;
 
         //ÉoÉgÉãçƒäJ

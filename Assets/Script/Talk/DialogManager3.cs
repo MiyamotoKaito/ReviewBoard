@@ -10,6 +10,7 @@ public class DialogManager3 : MonoBehaviour
     [SerializeField] private GameObject dialogPanel;
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
+    [SerializeField] private Text NextTalk;
     [SerializeField] private string[] dialogueLines;
     [SerializeField] private string characterName = "”EŽÒ";
 
@@ -23,7 +24,7 @@ public class DialogManager3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inDialogue && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if (inDialogue && (Input.GetKeyDown(KeyCode.Space)))
         {
             DisplayNextLine();
         }
@@ -37,6 +38,7 @@ public class DialogManager3 : MonoBehaviour
         dialogPanel.SetActive(true);
         Time.timeScale = 0f;
         nameText.text = characterName;
+        NextTalk.text = NextTalk.text;
         currentLines = 0;
         dialogText.text = dialogueLines[currentLines];
         inDialogue = true;
@@ -66,6 +68,7 @@ public class DialogManager3 : MonoBehaviour
         dialogPanel.SetActive(false);
         nameText.gameObject.SetActive(false);
         dialogText.gameObject.SetActive(false);
+        NextTalk.gameObject.SetActive(false);
         Time.timeScale = 1f;
         inDialogue = false;
         Cursor.visible = false;

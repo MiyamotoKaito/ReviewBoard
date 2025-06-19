@@ -18,8 +18,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void Start()
     {
-        m_health.gameObject.SetActive(false); m_burn.gameObject.SetActive(false);
-        SetGauge(1.0f);
+        m_health.gameObject.SetActive(true);
+        m_burn.gameObject.SetActive(true);
+        SetGauge(1.0f); // Ç±Ç±Ç≈ fillAmount ÇïœçX
+        m_health.gameObject.SetActive(false);
+        m_burn.gameObject.SetActive(false);
+
         PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
     }
 
