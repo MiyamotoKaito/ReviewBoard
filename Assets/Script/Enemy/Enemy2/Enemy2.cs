@@ -76,7 +76,7 @@ public class Enemy2 : MonoBehaviour
 
             if (Colors != null)
             {
-                StartCoroutine(FlashRed(Colors));
+                StartCoroutine(FlashRed(Colors));//当たると赤くなる
             }
 
 

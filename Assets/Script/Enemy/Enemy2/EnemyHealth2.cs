@@ -19,7 +19,7 @@ public class EnemyHealth2 : MonoBehaviour
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogText;
     [SerializeField] private Text NextTalk;
-    [SerializeField] private string[] dialogueLines;
+    [SerializeField] private string [] dialogueLines;
     [SerializeField] private string characterName;
 
     private int currentLines = 0;
@@ -56,6 +56,7 @@ public class EnemyHealth2 : MonoBehaviour
         nameText.gameObject.SetActive(true);
         dialogText.gameObject.SetActive(true);
         NextTalk.text = NextTalk.text;
+        healthSlider.gameObject .SetActive(false);
         nameText.text = "”EŽÒ";
 
         for (int i = 0; i < dialogueLines.Length; i++)
@@ -79,6 +80,7 @@ public class EnemyHealth2 : MonoBehaviour
         nameText.gameObject.SetActive(false);
         dialogText.gameObject.SetActive(false);
         NextTalk.gameObject.SetActive(false);
+        healthSlider.gameObject.SetActive(true);
         Time.timeScale = 1f;
 
         //ƒoƒgƒ‹ÄŠJ
