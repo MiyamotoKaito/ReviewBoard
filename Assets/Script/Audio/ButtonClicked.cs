@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ButtonClicked : MonoBehaviour
+public class ButtonClickSound : MonoBehaviour
 {
-    [SerializeField] private AudioSource m_clickSound;
+    [SerializeField] private AudioSource clickSound;
 
-    public void PlayClick()
+    public void PlayClickSound()
     {
-        m_clickSound.Play();
+        clickSound.Play();
     }
 }

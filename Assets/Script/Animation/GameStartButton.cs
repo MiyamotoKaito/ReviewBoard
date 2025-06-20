@@ -11,7 +11,7 @@ public class GameStartButton : MonoBehaviour
     [SerializeField] float fadeDuration = 1f;
     void Start()
     {
-        SelectButton.onClick.AddListener(() => FadeAndLoad("Tutorial"));
+        TutorialButton.onClick.AddListener(() => FadeAndLoad("Tutorial"));
         SelectButton.onClick.AddListener(() => FadeAndLoad("GameSelect"));
 
         // Å‰‚Í“§–¾
