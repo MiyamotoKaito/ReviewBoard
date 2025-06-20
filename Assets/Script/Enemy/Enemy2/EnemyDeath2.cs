@@ -11,14 +11,15 @@ public class EnemyDeath2 : MonoBehaviour
     [SerializeField] GameObject clearUIPanel;
     [SerializeField] Button NextStageButton;
     [SerializeField] Button TitleButton;
+    [SerializeField] int currentStageNumber = 2; // 追加：現在のステージ番号
     void Start()
     {
+        CompleteStage();
         //敵を倒したら次のステージのボタンとタイトルボタンを表示
         if (enemyText != null)
         {
             enemyText.text = "天晴！！";
         }
-        NextStageButton.onClick.AddListener(() => OnclickNextStageUI());
         TitleButton.onClick.AddListener(() => OnclickTitleUI());
 
     }
@@ -27,6 +28,15 @@ public class EnemyDeath2 : MonoBehaviour
     void Update()
     {
         ShowCaseUI();
+    }
+
+    private void CompleteStage()
+    {
+        // PlayerPrefsでステージクリア状態を保存
+        PlayerPrefs.SetInt($"Stage{currentStageNumber}Cleared", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log($"ステージ{currentStageNumber}をクリアしました！");
     }
 
     /// <summary>
@@ -40,16 +50,10 @@ public class EnemyDeath2 : MonoBehaviour
         }
     }
 
-    private void OnclickNextStageUI()
-    {
-        Time.timeScale = 1f;
-        int NextStage = SceneManager.GetActiveScene().buildIndex + 2;
-        SceneManager.LoadScene(NextStage);
-    }
 
     private void OnclickTitleUI()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("StageSelect");
     }
 }

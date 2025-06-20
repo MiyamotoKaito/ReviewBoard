@@ -9,6 +9,7 @@ public class SelectButton : MonoBehaviour
     [SerializeField] Button stage1Button;
     [SerializeField] Button stage2Button;
     [SerializeField] Button stage3Button;
+    [SerializeField] Button TitleButton;
     [SerializeField] Image fadePanel; // フェードアウト用
     [SerializeField] float fadeDuration = 1f;
     void Start()
@@ -16,6 +17,7 @@ public class SelectButton : MonoBehaviour
         stage1Button.onClick.AddListener(() => FadeAndLoad("Stage1"));
         stage2Button.onClick.AddListener(() => FadeAndLoad("Stage2"));
         stage3Button.onClick.AddListener(() => FadeAndLoad("Stage3"));
+        TitleButton.onClick.AddListener(() => FadeAndLoad("Title"));
 
         // 最初は透明
         fadePanel.color = new Color(0, 0, 0, 0);

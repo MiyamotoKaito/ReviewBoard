@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,24 +12,30 @@ public class GameManager : MonoBehaviour
     [Header("ステージクリア状態")]
     [SerializeField] private bool stage1Cleared = false;
     [SerializeField] private bool stage2Cleared = false;
-    [SerializeField] private bool stage3Cleared = false;
+
+    [Header("デバッグ設定")]
+    [SerializeField] private bool resetProgressOnPlay = true; // エディタでプレイ時にリセットするかどうか
 
     private void Start()
     {
+#if UNITY_EDITOR
+        // プレイモード開始時のみリセット（最初の1回だけ）
+        if (resetProgressOnPlay && !HasResetThisSession())
+        {
+            ResetStageProgress();
+            MarkResetForThisSession();
+        }
+#endif
+        LoadStageProgress();
         UpdateStageButtons();
     }
 
     // ステージボタンの有効/無効を更新
     private void UpdateStageButtons()
     {
-        // ステージ1は常に有効
-        stage1Button.interactable = true;
-
-        // ステージ2はステージ1クリア後に有効
-        stage2Button.interactable = stage1Cleared;
-
-        // ステージ3はステージ2クリア後に有効
-        stage3Button.interactable = stage2Cleared;
+        if (stage1Button != null) stage1Button.interactable = true;
+        if (stage2Button != null) stage2Button.interactable = stage1Cleared;
+        if (stage3Button != null) stage3Button.interactable = stage2Cleared;
     }
 
     // ステージクリア時に呼び出すメソッド
@@ -38,21 +45,13 @@ public class GameManager : MonoBehaviour
         {
             case 1:
                 stage1Cleared = true;
-                Debug.Log("ステージ1クリア！");
                 break;
             case 2:
                 stage2Cleared = true;
-                Debug.Log("ステージ2クリア！");
-                break;
-            case 3:
-                stage3Cleared = true;
-                Debug.Log("ステージ3クリア！");
                 break;
         }
 
         UpdateStageButtons();
-
-        // データを保存（次回起動時も有効にする）
         SaveStageProgress();
     }
 
@@ -61,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Stage1Cleared", stage1Cleared ? 1 : 0);
         PlayerPrefs.SetInt("Stage2Cleared", stage2Cleared ? 1 : 0);
-        PlayerPrefs.SetInt("Stage3Cleared", stage3Cleared ? 1 : 0);
         PlayerPrefs.Save();
     }
 
@@ -70,11 +68,40 @@ public class GameManager : MonoBehaviour
     {
         stage1Cleared = PlayerPrefs.GetInt("Stage1Cleared", 0) == 1;
         stage2Cleared = PlayerPrefs.GetInt("Stage2Cleared", 0) == 1;
-        stage3Cleared = PlayerPrefs.GetInt("Stage3Cleared", 0) == 1;
     }
 
-    private void Awake()
+    // ステージ進行状況をリセット
+    private void ResetStageProgress()
     {
+        PlayerPrefs.DeleteKey("Stage1Cleared");
+        PlayerPrefs.DeleteKey("Stage2Cleared");
+        PlayerPrefs.DeleteKey("Stage3Cleared"); // 将来的に追加される可能性も考慮
+        PlayerPrefs.Save();
+
+        stage1Cleared = false;
+        stage2Cleared = false;
+
+        Debug.Log("ステージ進行状況をリセットしました");
+    }
+
+    // このセッションでリセット済みかチェック
+    private bool HasResetThisSession()
+    {
+        return SessionState.GetBool("StageProgressReset", false);
+    }
+
+    // このセッションでリセット済みとしてマーク
+    private void MarkResetForThisSession()
+    {
+        SessionState.SetBool("StageProgressReset", true);
+    }
+
+    // インスペクターからも呼び出せるように
+    [ContextMenu("Reset Stage Progress")]
+    public void ResetStageProgressFromMenu()
+    {
+        ResetStageProgress();
         LoadStageProgress();
+        UpdateStageButtons();
     }
 }

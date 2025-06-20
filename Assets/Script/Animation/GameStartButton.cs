@@ -12,7 +12,7 @@ public class GameStartButton : MonoBehaviour
     void Start()
     {
         TutorialButton.onClick.AddListener(() => FadeAndLoad("Tutorial"));
-        SelectButton.onClick.AddListener(() => FadeAndLoad("GameSelect"));
+        SelectButton.onClick.AddListener(() => FadeAndLoad("StageSelect"));
 
         // Å‰‚Í“§–¾
         fadePanel.color = new Color(0, 0, 0, 0);

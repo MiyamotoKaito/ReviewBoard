@@ -528,6 +528,10 @@ PrefabInstance:
       propertyPath: EnemyAttackObject
       value: 
       objectReference: {fileID: 2539095265665289486, guid: c4ed8af48af7eaa438513809b3319eb9, type: 3}
+    - target: {fileID: 3878279036455551382, guid: 6ccc21e08e3537b4497a7f8b473b686d, type: 3}
+      propertyPath: currentStageNumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5992047810349067790, guid: 6ccc21e08e3537b4497a7f8b473b686d, type: 3}
       propertyPath: m_Name
       value: Enemy

@@ -10,6 +10,7 @@ public class Enemy3 : MonoBehaviour
     [SerializeField] GameObject EnemyAttackObject;
     [SerializeField] float AttackTimer = 1.0f;
     [SerializeField] float AttackCooldown = 2f;
+    [SerializeField] int currentStageNumber = 3; // 追加：現在のステージ番号
 
     public Slider healthSlider;            //HPバー
     public float leftLimit = -9.0f;        // 左端のX座標
@@ -118,6 +119,15 @@ public class Enemy3 : MonoBehaviour
         Instantiate(DeathgameObject, transform.position, Quaternion.identity);
         Destroy(gameObject);
 
+    }
+
+    private void CompleteStage()
+    {
+        // PlayerPrefsでステージクリア状態を保存
+        PlayerPrefs.SetInt($"Stage{currentStageNumber}Cleared", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log($"ステージ{currentStageNumber}をクリアしました！");
     }
 
     public void StartBattle()

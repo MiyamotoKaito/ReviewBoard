@@ -22,7 +22,6 @@ public class EnemyHealth2 : MonoBehaviour
     [SerializeField] private string [] dialogueLines;
     [SerializeField] private string characterName;
 
-    private int currentLines = 0;
     private bool inDialogue = false;
 
     public Slider healthSlider;

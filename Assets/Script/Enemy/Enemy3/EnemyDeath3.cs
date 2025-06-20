@@ -9,15 +9,15 @@ public class EnemyDeath3 : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private Text enemyText;
     [SerializeField] GameObject clearUIPanel;
-    [SerializeField] Button NextStageButton;
     [SerializeField] Button TitleButton;
+    [SerializeField] int currentStageNumber = 3; // 追加：現在のステージ番号
     void Start()
     {
+        CompleteStage();
         if (enemyText != null)
         {
             enemyText.text = "マッスーーーール！！";
         }
-        NextStageButton.onClick.AddListener(() => OnclickNextStageUI());
         TitleButton.onClick.AddListener(() => OnclickTitleUI());
 
     }
@@ -28,6 +28,15 @@ public class EnemyDeath3 : MonoBehaviour
         ShowCaseUI();
     }
 
+    private void CompleteStage()
+    {
+        // PlayerPrefsでステージクリア状態を保存
+        PlayerPrefs.SetInt($"Stage{currentStageNumber}Cleared", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log($"ステージ{currentStageNumber}をクリアしました！");
+    }
+
     private void ShowCaseUI()
     {
         if (clearUIPanel != null)
@@ -36,16 +45,10 @@ public class EnemyDeath3 : MonoBehaviour
         }
     }
 
-    private void OnclickNextStageUI()
-    {
-        Time.timeScale = 1f;
-        int NextStage = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene(NextStage);
-    }
 
     private void OnclickTitleUI()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("StageSelect");
     }
 }

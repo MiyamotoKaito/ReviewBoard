@@ -9,6 +9,7 @@ public class Enemy2 : MonoBehaviour
     [SerializeField] GameObject EnemyAttackObject;
     [SerializeField] float AttackTimer = 1.0f;
     [SerializeField] float AttackCooldown = 2f;
+    [SerializeField] int currentStageNumber = 2; // 追加：現在のステージ番号
 
     public Slider healthSlider;            //HPバー
     public float leftLimit = -9.0f;        // 左端のX座標
@@ -107,6 +108,14 @@ public class Enemy2 : MonoBehaviour
 
     }
 
+    private void CompleteStage()
+    {
+        // PlayerPrefsでステージクリア状態を保存
+        PlayerPrefs.SetInt($"Stage{currentStageNumber}Cleared", 1);
+        PlayerPrefs.Save();
+
+        Debug.Log($"ステージ{currentStageNumber}をクリアしました！");
+    }
     private void Die()
     {
         GameObject[] handhit = GameObject.FindGameObjectsWithTag("Punch"); //"Punch" タグが付いたすべてのGameObjectを配列として取得
