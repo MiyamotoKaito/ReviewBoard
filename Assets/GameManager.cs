@@ -1,6 +1,8 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoBehaviour
 {
@@ -16,19 +18,30 @@ public class GameManager : MonoBehaviour
     [Header("デバッグ設定")]
     [SerializeField] private bool resetProgressOnPlay = true; // エディタでプレイ時にリセットするかどうか
 
+    private static bool hasResetThisPlaySession = false; // static変数で管理
+
     private void Start()
     {
 #if UNITY_EDITOR
-        // プレイモード開始時のみリセット（最初の1回だけ）
-        if (resetProgressOnPlay && !HasResetThisSession())
+        // プレイモード開始時のみリセット（static変数で管理）
+        if (resetProgressOnPlay && !hasResetThisPlaySession)
         {
             ResetStageProgress();
-            MarkResetForThisSession();
+            hasResetThisPlaySession = true;
         }
 #endif
         LoadStageProgress();
         UpdateStageButtons();
     }
+
+#if UNITY_EDITOR
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticVariables()
+    {
+        // プレイモード開始時にstatic変数をリセット
+        hasResetThisPlaySession = false;
+    }
+#endif
 
     // ステージボタンの有効/無効を更新
     private void UpdateStageButtons()
@@ -50,7 +63,6 @@ public class GameManager : MonoBehaviour
                 stage2Cleared = true;
                 break;
         }
-
         UpdateStageButtons();
         SaveStageProgress();
     }
@@ -68,32 +80,25 @@ public class GameManager : MonoBehaviour
     {
         stage1Cleared = PlayerPrefs.GetInt("Stage1Cleared", 0) == 1;
         stage2Cleared = PlayerPrefs.GetInt("Stage2Cleared", 0) == 1;
+
+        Debug.Log($"読み込み結果 - Stage1Cleared: {stage1Cleared}, Stage2Cleared: {stage2Cleared}");
     }
 
     // ステージ進行状況をリセット
     private void ResetStageProgress()
     {
-        PlayerPrefs.DeleteKey("Stage1Cleared");
-        PlayerPrefs.DeleteKey("Stage2Cleared");
-        PlayerPrefs.DeleteKey("Stage3Cleared"); // 将来的に追加される可能性も考慮
+        // PlayerPrefsを明示的に0に設定してからSave
+        PlayerPrefs.SetInt("Stage1Cleared", 0);
+        PlayerPrefs.SetInt("Stage2Cleared", 0);
+        PlayerPrefs.SetInt("Stage3Cleared", 0);
         PlayerPrefs.Save();
 
+        // 変数も確実にfalseに設定
         stage1Cleared = false;
         stage2Cleared = false;
 
         Debug.Log("ステージ進行状況をリセットしました");
-    }
-
-    // このセッションでリセット済みかチェック
-    private bool HasResetThisSession()
-    {
-        return SessionState.GetBool("StageProgressReset", false);
-    }
-
-    // このセッションでリセット済みとしてマーク
-    private void MarkResetForThisSession()
-    {
-        SessionState.SetBool("StageProgressReset", true);
+        Debug.Log($"リセット後の値確認 - Stage1: {PlayerPrefs.GetInt("Stage1Cleared", -1)}, Stage2: {PlayerPrefs.GetInt("Stage2Cleared", -1)}");
     }
 
     // インスペクターからも呼び出せるように
