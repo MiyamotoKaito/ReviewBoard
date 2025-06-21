@@ -11,9 +11,9 @@ public class WeaponparamAsset : ScriptableObject
 [System.Serializable]
 public class Weaponparam
 {
-    public string WeaponName = "Punch";
+    public string WeaponName;
 
-    [SerializeField] int Weapondamage = 10;
+    [SerializeField] int Weapondamage;
     [SerializeField] GameObject WeaponpPrefab;
     [SerializeField] GameObject WeaponHitPrefab;
 }

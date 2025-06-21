@@ -6,12 +6,12 @@ using UnityEngine;
 using UnityEngine.Experimental.AI;
 using UnityEngine.UI;
 
-public class EnemyHealth2 : MonoBehaviour
+public class BossHealth : MonoBehaviour
 {
     [SerializeField] float AttackTimer;
     [SerializeField] float AttackCooldown;
-    [SerializeField] GameObject RightShuriken;
-    [SerializeField] GameObject LeftShuriken;
+    //[SerializeField] GameObject RightShuriken;
+    //[SerializeField] GameObject LeftShuriken;
     [SerializeField] GameObject Rightdanger;
     [SerializeField] GameObject Leftdanger;
     [SerializeField] private GameObject dialogPanel;
@@ -29,7 +29,7 @@ public class EnemyHealth2 : MonoBehaviour
 
     void Start()
     {
-        healthSlider.value = 200f;
+        healthSlider.value = 300f;
         dialogPanel.SetActive(false);
     }
 
@@ -105,8 +105,8 @@ public class EnemyHealth2 : MonoBehaviour
     private void SpawnShurikens()
     {
         // クナイ投げ（TimeScale が 1 になった時に実行）
-        Instantiate(LeftShuriken, new Vector3(-18f, 16f, 0f), Quaternion.identity);
-        Instantiate(RightShuriken, new Vector3(18f, 16f, 0f), Quaternion.identity);
+        //Instantiate(LeftShuriken, new Vector3(-18f, 16f, 0f), Quaternion.identity);
+       //Instantiate(RightShuriken, new Vector3(18f, 16f, 0f), Quaternion.identity);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
