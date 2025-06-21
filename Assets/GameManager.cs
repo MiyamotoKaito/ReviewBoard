@@ -10,20 +10,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button stage1Button;
     [SerializeField] private Button stage2Button;
     [SerializeField] private Button stage3Button;
+    [SerializeField] private Button BossButton;
 
     [Header("ステージクリア状態")]
     [SerializeField] private bool stage1Cleared = false;
     [SerializeField] private bool stage2Cleared = false;
+    [SerializeField] private bool stage3Cleared = false;
 
     [Header("デバッグ設定")]
-    [SerializeField] private bool resetProgressOnPlay = true; // エディタでプレイ時にリセットするかどうか
-
-    private static bool hasResetThisPlaySession = false; // static変数で管理
+    [SerializeField] private bool resetProgressOnPlay = false;
+    private static bool hasResetThisPlaySession = false;
 
     private void Start()
     {
 #if UNITY_EDITOR
-        // プレイモード開始時のみリセット（static変数で管理）
         if (resetProgressOnPlay && !hasResetThisPlaySession)
         {
             ResetStageProgress();
@@ -32,81 +32,104 @@ public class GameManager : MonoBehaviour
 #endif
         LoadStageProgress();
         UpdateStageButtons();
+
+        Debug.Log($"GameManager Start - Stage1: {stage1Cleared}, Stage2: {stage2Cleared}, Stage3: {stage3Cleared}");
     }
 
 #if UNITY_EDITOR
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStaticVariables()
     {
-        // プレイモード開始時にstatic変数をリセット
         hasResetThisPlaySession = false;
     }
 #endif
 
-    // ステージボタンの有効/無効を更新
     private void UpdateStageButtons()
     {
+        // 通常のステージボタンの制御
         if (stage1Button != null) stage1Button.interactable = true;
         if (stage2Button != null) stage2Button.interactable = stage1Cleared;
         if (stage3Button != null) stage3Button.interactable = stage2Cleared;
+
+        // BossButtonの表示制御
+        if (BossButton != null)
+        {
+            // Stage3がクリアされている場合のみ表示
+            BossButton.gameObject.SetActive(stage3Cleared);
+            if (stage3Cleared)
+            {
+                BossButton.interactable = true;
+            }
+        }
+
+        Debug.Log($"ボタン状態更新 - Stage2: {(stage2Button != null ? stage2Button.interactable.ToString() : "null")}, Stage3: {(stage3Button != null ? stage3Button.interactable.ToString() : "null")}, Boss表示: {stage3Cleared}");
     }
 
-    // ステージクリア時に呼び出すメソッド
     public void ClearStage(int stageNumber)
     {
         switch (stageNumber)
         {
             case 1:
                 stage1Cleared = true;
+                Debug.Log("Stage1クリア！Stage2が解放されました");
                 break;
             case 2:
                 stage2Cleared = true;
+                Debug.Log("Stage2クリア！Stage3が解放されました");
+                break;
+            case 3:
+                stage3Cleared = true;
+                Debug.Log("Stage3クリア！Bossボタンが表示されます");
                 break;
         }
         UpdateStageButtons();
         SaveStageProgress();
     }
 
-    // ステージ進行状況を保存
     private void SaveStageProgress()
     {
         PlayerPrefs.SetInt("Stage1Cleared", stage1Cleared ? 1 : 0);
         PlayerPrefs.SetInt("Stage2Cleared", stage2Cleared ? 1 : 0);
+        PlayerPrefs.SetInt("Stage3Cleared", stage3Cleared ? 1 : 0);
         PlayerPrefs.Save();
+        Debug.Log($"進行状況保存 - Stage1: {stage1Cleared}, Stage2: {stage2Cleared}, Stage3: {stage3Cleared}");
     }
 
-    // ステージ進行状況を読み込み
     private void LoadStageProgress()
     {
         stage1Cleared = PlayerPrefs.GetInt("Stage1Cleared", 0) == 1;
         stage2Cleared = PlayerPrefs.GetInt("Stage2Cleared", 0) == 1;
+        stage3Cleared = PlayerPrefs.GetInt("Stage3Cleared", 0) == 1;
 
-        Debug.Log($"読み込み結果 - Stage1Cleared: {stage1Cleared}, Stage2Cleared: {stage2Cleared}");
+        Debug.Log($"進行状況読み込み - Stage1: {stage1Cleared}, Stage2: {stage2Cleared}, Stage3: {stage3Cleared}");
+        Debug.Log($"PlayerPrefs生値 - Stage1: {PlayerPrefs.GetInt("Stage1Cleared", -1)}, Stage2: {PlayerPrefs.GetInt("Stage2Cleared", -1)}, Stage3: {PlayerPrefs.GetInt("Stage3Cleared", -1)}");
     }
 
-    // ステージ進行状況をリセット
     private void ResetStageProgress()
     {
-        // PlayerPrefsを明示的に0に設定してからSave
         PlayerPrefs.SetInt("Stage1Cleared", 0);
         PlayerPrefs.SetInt("Stage2Cleared", 0);
         PlayerPrefs.SetInt("Stage3Cleared", 0);
         PlayerPrefs.Save();
 
-        // 変数も確実にfalseに設定
         stage1Cleared = false;
         stage2Cleared = false;
+        stage3Cleared = false;
 
         Debug.Log("ステージ進行状況をリセットしました");
-        Debug.Log($"リセット後の値確認 - Stage1: {PlayerPrefs.GetInt("Stage1Cleared", -1)}, Stage2: {PlayerPrefs.GetInt("Stage2Cleared", -1)}");
     }
 
-    // インスペクターからも呼び出せるように
     [ContextMenu("Reset Stage Progress")]
     public void ResetStageProgressFromMenu()
     {
         ResetStageProgress();
         LoadStageProgress();
         UpdateStageButtons();
+    }
+
+    [ContextMenu("Check PlayerPrefs")]
+    public void CheckPlayerPrefs()
+    {
+        Debug.Log($"現在のPlayerPrefs - Stage1: {PlayerPrefs.GetInt("Stage1Cleared", -1)}, Stage2: {PlayerPrefs.GetInt("Stage2Cleared", -1)}, Stage3: {PlayerPrefs.GetInt("Stage3Cleared", -1)}");
     }
 }

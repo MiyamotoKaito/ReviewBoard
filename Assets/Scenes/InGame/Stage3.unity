@@ -1751,11 +1751,11 @@ PrefabInstance:
       objectReference: {fileID: 2196424814675723650, guid: 0a537a6e142e51a41adb452c3e0306a0, type: 3}
     - target: {fileID: 8262411911328264175, guid: af9c075716a9b1a46953b556f80ea321, type: 3}
       propertyPath: m_Value
-      value: 300
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8262411911328264175, guid: af9c075716a9b1a46953b556f80ea321, type: 3}
       propertyPath: m_MaxValue
-      value: 300
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8410170345786456355, guid: af9c075716a9b1a46953b556f80ea321, type: 3}
       propertyPath: m_AnchorMax.x

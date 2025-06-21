@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class EnemyDeath : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private Text enemyText;
     [SerializeField] GameObject clearUIPanel;
     [SerializeField] Button TitleButton;
-    [SerializeField] int currentStageNumber = 1; // 追加：現在のステージ番号
+    [SerializeField] int currentStageNumber = 1; // 現在のステージ番号
+
     void Start()
     {
         CompleteStage();
@@ -19,10 +19,8 @@ public class EnemyDeath : MonoBehaviour
             enemyText.text = "ぐはっ！！";
         }
         TitleButton.onClick.AddListener(() => OnclickTitleUI());
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         ShowCaseUI();
@@ -30,12 +28,16 @@ public class EnemyDeath : MonoBehaviour
 
     private void CompleteStage()
     {
-        // PlayerPrefsでステージクリア状態を保存
+        // 直接PlayerPrefsに保存する方法
         PlayerPrefs.SetInt($"Stage{currentStageNumber}Cleared", 1);
         PlayerPrefs.Save();
-
         Debug.Log($"ステージ{currentStageNumber}をクリアしました！");
+
+        // 保存されたかを確認
+        int savedValue = PlayerPrefs.GetInt($"Stage{currentStageNumber}Cleared", 0);
+        Debug.Log($"保存確認 - Stage{currentStageNumber}Cleared: {savedValue}");
     }
+
     private void ShowCaseUI()
     {
         if (clearUIPanel != null)
@@ -43,7 +45,6 @@ public class EnemyDeath : MonoBehaviour
             clearUIPanel.SetActive(true);
         }
     }
-
 
     private void OnclickTitleUI()
     {
