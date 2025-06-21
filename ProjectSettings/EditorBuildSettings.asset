@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OutGame/StageSelect.unity
     guid: 136801b744e64da4e9b3cb0107fee816
+  - enabled: 1
+    path: Assets/Scenes/InGame/BossBattle.unity
+    guid: 3715adf2815ff604a8ea18e9917b0809
   m_configObjects: {}

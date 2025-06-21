@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class DialogManager3 : MonoBehaviour
@@ -12,7 +13,7 @@ public class DialogManager3 : MonoBehaviour
     [SerializeField] private Text dialogText;
     [SerializeField] private Text NextTalk;
     [SerializeField] private string[] dialogueLines;
-    [SerializeField] private string characterName = "”EŽÒ";
+    [SerializeField] private string characterName;
 
     private int currentLines = 0;
     private bool inDialogue = true;
@@ -73,6 +74,6 @@ public class DialogManager3 : MonoBehaviour
         inDialogue = false;
         Cursor.visible = false;
 
-        FindObjectOfType<Enemy3>().StartBattle();
+        FindObjectOfType<Boss>().StartBattle();
     }
 }
