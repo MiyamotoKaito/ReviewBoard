@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -308,8 +307,8 @@ GameObject:
   - component: {fileID: 537523725}
   - component: {fileID: 537523724}
   - component: {fileID: 537523723}
-  - component: {fileID: 537523727}
   - component: {fileID: 537523728}
+  - component: {fileID: 537523729}
   m_Layer: 5
   m_Name: Talk
   m_TagString: Untagged
@@ -403,27 +402,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &537523727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537523722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 439efe58b71b7684e98e258cc9ffe58b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogPanel: {fileID: 1827593411}
-  nameText: {fileID: 1026401948}
-  dialogText: {fileID: 726489263}
-  NextTalk: {fileID: 1930332768}
-  dialogueLines:
-  - "\u3042\u3093\u305F\u3001\u52C9\u5F37\u306F\u3061\u3083\u3093\u3068\u3057\u3066\u308B\u306E\uFF1F"
-  - ............
-  - "\u3061\u3083\u3093\u3068\u3079\u3093\u304D\u3087\u3046\u3057\u306A\u3055\u3041\u30FC\u30FC\u30FC\u3044\uFF01\uFF01"
-  characterName: "\u304A\u6BCD\u3055\u3093"
 --- !u!212 &537523728
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -476,6 +454,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &537523729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537523722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045ddde1b6198234f8852a42d1c77c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogPanel: {fileID: 1827593411}
+  nameText: {fileID: 1026401948}
+  dialogText: {fileID: 726489263}
+  NextTalk: {fileID: 1930332768}
+  dialogueLines:
+  - "\u3042\u3093\u305F\u3001\u52C9\u5F37\u306F\u3061\u3083\u3093\u3068\u3057\u3066\u308B\u306E\uFF1F"
+  - ............
+  - "\u3061\u3083\u3093\u3068\u3079\u3093\u304D\u3087\u3046\u3057\u306A\u3055\u3041\u30FC\u30FC\u30FC\u3044\uFF01\uFF01"
+  characterName: "\u304A\u6BCD\u3055\u3093"
 --- !u!1001 &541304508
 PrefabInstance:
   m_ObjectHideFlags: 0

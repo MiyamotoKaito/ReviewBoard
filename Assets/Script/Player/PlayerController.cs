@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         punchTimer += Time.deltaTime;
         if (punchTimer >= punchCooldown) // クールタイム経過してるか
         {
-            if (Input.GetMouseButtonDown(1))//左クリックで左手を出現させる
+            if (Input.GetMouseButtonDown(0))//左クリックで左手を出現させる
             {
                 punchTimer = 0f;
 
@@ -55,17 +55,17 @@ public class PlayerController : MonoBehaviour
                 Instantiate(RightHand, worldPos, Quaternion.identity);
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                punchTimer = 0f;
+           //if (Input.GetMouseButtonDown(0))
+           // {
+           //     punchTimer = 0f;
 
-                Vector3 mousePos = Input.mousePosition;
-                mousePos.z = 10f;
-                mousePos.y = -2f;
+           //     Vector3 mousePos = Input.mousePosition;
+           //     mousePos.z = 10f;
+           //     mousePos.y = -2f;
 
-                Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
-                Instantiate(LeftHand, worldPos, Quaternion.identity);
-            }
+           //     Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+           //     Instantiate(LeftHand, worldPos, Quaternion.identity);
+           // }
         }
     }
 }
