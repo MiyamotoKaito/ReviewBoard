@@ -19,7 +19,7 @@ public class DialogManager3 : MonoBehaviour
     private bool inDialogue = true;
     void Start()
     {
-        StartDialogue();
+        StartCoroutine(HandleDialogue());
     }
 
     // Update is called once per frame
@@ -29,6 +29,24 @@ public class DialogManager3 : MonoBehaviour
         {
             DisplayNextLine();
         }
+    }
+    
+    IEnumerator HandleDialogue()
+    {
+        dialogPanel.SetActive(true);
+        Time.timeScale = 0f;
+        nameText.text = characterName;
+
+        for (int i = 0; i < dialogueLines.Length; i++)
+        {
+            dialogText.text = dialogueLines[i];
+
+            // リアルタイムで入力を待機
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            yield return new WaitForSecondsRealtime(0.1f); // 連続入力防止
+        }
+
+        EndDialogue();
     }
 
     /// <summary>
@@ -74,6 +92,6 @@ public class DialogManager3 : MonoBehaviour
         inDialogue = false;
         Cursor.visible = false;
 
-        FindObjectOfType<Enemy>().StartBattle();
+        FindObjectOfType<Boss2>().StartBattle();
     }
 }
