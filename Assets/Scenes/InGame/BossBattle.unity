@@ -605,7 +605,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fa5d4e11d8934c04f868bf36039da2bb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 08536157f43d5d04789519badb1c2fba, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
@@ -1755,12 +1755,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
       propertyPath: AttackTimer
-      value: 4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
+      propertyPath: AttackCooldown
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
       propertyPath: patrolDuration
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
+      propertyPath: DeathgameObject
+      value: 
+      objectReference: {fileID: 2668499156520283765, guid: 44da932e5100c6b48802066f28e5dd26, type: 3}
     - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
       propertyPath: BossAttackObject
       value: 
@@ -1783,7 +1791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
       propertyPath: normalAttackCooldown
-      value: 4
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 9134088991128879517, guid: 83cd05b6516030840b4e3be6f63d06cd, type: 3}
       propertyPath: normalPatrolDuration
