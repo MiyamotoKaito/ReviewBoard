@@ -99,7 +99,14 @@ public class EnemyHealth2 : MonoBehaviour
         var sr = GetComponent<SpriteRenderer>();
         sr.DOFade(0f, 1.0f).SetLoops(-1, LoopType.Yoyo); // 忍者の点滅
         var greenImage = healthSlider.fillRect.GetComponent<Image>();
-        greenImage.DOFade(0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo); // HPバーの点滅（緑）
+        greenImage.DOFade(0f, 1.0f).SetLoops(-1, LoopType.Yoyo); // 緑の現在HPゲージ
+
+        // Fillを点滅させる
+        var bgImage = healthSlider.transform.Find("Background").GetComponent<Image>();
+        if (bgImage != null)
+        {
+            bgImage.DOFade(0f, 1.0f).SetLoops(-1, LoopType.Yoyo); // 背景ゲージの点滅
+        }
     }
 
     private void SpawnShurikens()

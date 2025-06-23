@@ -20,10 +20,6 @@ public class Enemy2 : MonoBehaviour
     private bool movingRight = true;
     private bool isBattleStarted = false;
 
-    void Start()
-    {
-
-    }
     void Update()
     {
         if (!isBattleStarted)
