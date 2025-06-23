@@ -17,7 +17,7 @@ public class BossAttack : MonoBehaviour
     {
         Attack();
         Move();
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 7f);
         if (Time.timeScale == 0f)
         {
             Destroy(gameObject);
