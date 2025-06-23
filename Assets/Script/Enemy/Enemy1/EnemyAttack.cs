@@ -17,7 +17,7 @@ public class EnemyAttack : MonoBehaviour
     {
         Attack();
         Move();
-        Destroy(gameObject,10f);
+        Destroy(gameObject,3f);
         if (Time.timeScale == 0f)
         {
             Destroy(gameObject);
