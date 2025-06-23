@@ -8,10 +8,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private Image m_hpGauge;
     [SerializeField] private Image m_health;
     [SerializeField] private Image m_burn;
-
     public float duration = 0.5f;
     public float debugDamageRate = 0.2f;
     public float currentRate = 1f;
@@ -23,24 +22,31 @@ public class PlayerHealth : MonoBehaviour
         SetGauge(1.0f); // ここで fillAmount を変更
         m_health.gameObject.SetActive(false);
         m_burn.gameObject.SetActive(false);
-
         PlayerPrefs.SetInt("LastScene", SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Update()
     {
-
-
         if (currentRate <= debugDamageRate)
         {
             SceneManager.LoadScene("GameOver");
         }
 
+        // Time.timeScaleによってHPバーの表示・非表示を切り替え
         if (Time.timeScale == 1f)
         {
-            m_health.gameObject.SetActive(true); m_burn.gameObject.SetActive(true);
+            m_hpGauge.gameObject.SetActive(true);
+            m_health.gameObject.SetActive(true);
+            m_burn.gameObject.SetActive(true);
+        }
+        else if (Time.timeScale == 0f)
+        {
+            m_hpGauge.gameObject.SetActive(false);
+            m_health.gameObject.SetActive(false);
+            m_burn.gameObject.SetActive(false);
         }
     }
+
     public void SetGauge(float targetRate)
     {
         m_health.DOFillAmount(targetRate, duration).OnComplete(() =>
@@ -59,9 +65,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-
             TakeDamage(debugDamageRate);
         }
     }
-
 }

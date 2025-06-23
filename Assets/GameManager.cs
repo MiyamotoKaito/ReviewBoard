@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool resetProgressOnPlay = false;
     private static bool hasResetThisPlaySession = false;
 
+    // WebGL用のセッション管理
+    private const string SESSION_KEY = "GameSession";
+    private static string currentSessionId;
+
     private void Start()
     {
 #if UNITY_EDITOR
@@ -30,10 +34,65 @@ public class GameManager : MonoBehaviour
             hasResetThisPlaySession = true;
         }
 #endif
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // WebGLビルドの場合、ブラウザリロード検出
+        CheckForBrowserReload();
+#endif
+
         LoadStageProgress();
         UpdateStageButtons();
 
         Debug.Log($"GameManager Start - Stage1: {stage1Cleared}, Stage2: {stage2Cleared}, Stage3: {stage3Cleared}");
+    }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+    private void CheckForBrowserReload()
+    {
+        // 新しいセッションIDを生成
+        string newSessionId = System.DateTime.Now.Ticks.ToString();
+        
+        // 前回のセッションIDを取得
+        string savedSessionId = PlayerPrefs.GetString(SESSION_KEY, "");
+        
+        // セッションIDが異なる場合（ブラウザリロードまたは初回起動）
+        if (string.IsNullOrEmpty(savedSessionId) || savedSessionId != currentSessionId)
+        {
+            Debug.Log("ブラウザリロードまたは初回起動を検出 - ステージ進行状況をリセット");
+            ResetStageProgress();
+        }
+        
+        // 現在のセッションIDを保存
+        currentSessionId = newSessionId;
+        PlayerPrefs.SetString(SESSION_KEY, currentSessionId);
+        PlayerPrefs.Save();
+    }
+#endif
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // WebGLでフォーカスを失った場合（タブを閉じる、リロードなど）
+        if (!hasFocus)
+        {
+            // セッションIDをクリア（次回起動時にリセットされるように）
+            PlayerPrefs.DeleteKey(SESSION_KEY);
+            PlayerPrefs.Save();
+        }
+#endif
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // WebGLでポーズ状態になった場合
+        if (pauseStatus)
+        {
+            // セッションIDをクリア
+            PlayerPrefs.DeleteKey(SESSION_KEY);
+            PlayerPrefs.Save();
+        }
+#endif
     }
 
 #if UNITY_EDITOR
@@ -41,6 +100,7 @@ public class GameManager : MonoBehaviour
     private static void ResetStaticVariables()
     {
         hasResetThisPlaySession = false;
+        currentSessionId = null;
     }
 #endif
 
