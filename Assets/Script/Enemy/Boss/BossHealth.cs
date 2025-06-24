@@ -29,7 +29,6 @@ public class BossHealth : MonoBehaviour
     {
         if (!inDialogue && healthSlider.value <= 150f)
         {
-            Debug.Log("aaa");
             inDialogue = true;
             StartCoroutine(HandleDialogue());
         }
@@ -41,7 +40,8 @@ public class BossHealth : MonoBehaviour
         dialogPanel.SetActive(true);
         nameText.gameObject.SetActive(true);
         dialogText.gameObject.SetActive(true);
-        nameText.text = "トレーナー";
+        NextTalk.gameObject.SetActive(true);
+        nameText.text = "仏様";
 
         for (int i = 0; i < dialogueLines.Length; i++)
         {

@@ -324,7 +324,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mouseUI: {fileID: 384526271}
+  m_coolDown: {fileID: 1118730725}
   m_space: {fileID: 1384000725}
+--- !u!224 &535351322 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3205198851195910750, guid: 73b3c776e21507747a0386ae066a6d95, type: 3}
+  m_PrefabInstance: {fileID: 1053664727}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &535351326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535351317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed964a384fd1ef4dbd8e255a6503501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1118730725}
+  _coolTime: 0.5
+  _Value: 0
 --- !u!1 &537523722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1231,12 +1252,93 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3205198851195910750, guid: 73b3c776e21507747a0386ae066a6d95, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1118730724}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3875538238075804231, guid: 73b3c776e21507747a0386ae066a6d95, type: 3}
       insertIndex: -1
       addedObject: {fileID: 535351318}
+    - targetCorrespondingSourceObject: {fileID: 3875538238075804231, guid: 73b3c776e21507747a0386ae066a6d95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 535351326}
   m_SourcePrefab: {fileID: 100100000, guid: 73b3c776e21507747a0386ae066a6d95, type: 3}
+--- !u!1 &1118730723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1118730724}
+  - component: {fileID: 1118730726}
+  - component: {fileID: 1118730725}
+  m_Layer: 5
+  m_Name: CoolTime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1118730724
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118730723}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 535351322}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -156.7, y: 27.5}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1118730725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118730723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a5c624d4f7c882f408748af65422e175, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1118730726
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118730723}
+  m_CullTransparentMesh: 1
 --- !u!1 &1340812730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1810,10 @@ PrefabInstance:
     - target: {fileID: 5515733383188628450, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
       propertyPath: m_Name
       value: Cursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515733383188628450, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6536546317471635577, guid: 1024b16fefc77c047a17e7be58384784, type: 3}
       propertyPath: m_LocalPosition.x

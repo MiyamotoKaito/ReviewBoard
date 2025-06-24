@@ -21,9 +21,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool resetProgressOnPlay = false;
     private static bool hasResetThisPlaySession = false;
 
-    // WebGL用のセッション管理
+    // WebGL用のセッション管理（改善版）
     private const string SESSION_KEY = "GameSession";
+    private const string SESSION_VALID_KEY = "SessionValid";
     private static string currentSessionId;
+
+    // シングルトンパターンでGameManagerの重複を防ぐ
+    private static GameManager instance;
+    public static GameManager Instance => instance;
+
+    private void Awake()
+    {
+        // シングルトンパターンの実装
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+
+        // シーン遷移時にGameManagerを保持（必要に応じて）
+        // DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
@@ -36,7 +55,7 @@ public class GameManager : MonoBehaviour
 #endif
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        // WebGLビルドの場合、ブラウザリロード検出
+        // WebGLビルドの場合、ブラウザリロード検出（改善版）
         CheckForBrowserReload();
 #endif
 
@@ -49,22 +68,32 @@ public class GameManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
     private void CheckForBrowserReload()
     {
+        // セッション有効性フラグをチェック
+        bool isSessionValid = PlayerPrefs.GetInt(SESSION_VALID_KEY, 0) == 1;
+        
         // 新しいセッションIDを生成
         string newSessionId = System.DateTime.Now.Ticks.ToString();
         
         // 前回のセッションIDを取得
         string savedSessionId = PlayerPrefs.GetString(SESSION_KEY, "");
         
-        // セッションIDが異なる場合（ブラウザリロードまたは初回起動）
-        if (string.IsNullOrEmpty(savedSessionId) || savedSessionId != currentSessionId)
+        // 真のブラウザリロードかどうかを判定（より厳密に）
+        bool isTrueBrowserReload = string.IsNullOrEmpty(savedSessionId) || !isSessionValid;
+        
+        if (isTrueBrowserReload)
         {
-            Debug.Log("ブラウザリロードまたは初回起動を検出 - ステージ進行状況をリセット");
+            Debug.Log("真のブラウザリロードを検出 - ステージ進行状況をリセット");
             ResetStageProgress();
         }
+        else
+        {
+            Debug.Log("通常のシーン遷移を検出 - 進行状況を保持");
+        }
         
-        // 現在のセッションIDを保存
+        // 現在のセッションIDを保存し、セッションを有効に設定
         currentSessionId = newSessionId;
         PlayerPrefs.SetString(SESSION_KEY, currentSessionId);
+        PlayerPrefs.SetInt(SESSION_VALID_KEY, 1);
         PlayerPrefs.Save();
     }
 #endif
@@ -72,26 +101,66 @@ public class GameManager : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        // WebGLでフォーカスを失った場合（タブを閉じる、リロードなど）
+        // WebGLでフォーカスを失った場合の処理を改善
         if (!hasFocus)
         {
-            // セッションIDをクリア（次回起動時にリセットされるように）
-            PlayerPrefs.DeleteKey(SESSION_KEY);
+            Debug.Log("アプリケーションがフォーカスを失いました");
+            // 即座にセッションを無効化せず、遅延処理で判定
+            StartCoroutine(DelayedSessionInvalidation());
+        }
+        else
+        {
+            Debug.Log("アプリケーションがフォーカスを取得しました");
+            // フォーカスを取り戻した場合はセッションを有効に戻す
+            PlayerPrefs.SetInt(SESSION_VALID_KEY, 1);
             PlayerPrefs.Save();
         }
 #endif
     }
 
+#if UNITY_WEBGL && !UNITY_EDITOR
+    private System.Collections.IEnumerator DelayedSessionInvalidation()
+    {
+        // 短時間待機してからセッション無効化を判定
+        yield return new WaitForSeconds(0.5f);
+        
+        // まだフォーカスが戻っていない場合のみセッションを無効化
+        if (!Application.isFocused)
+        {
+            PlayerPrefs.SetInt(SESSION_VALID_KEY, 0);
+            PlayerPrefs.Save();
+            Debug.Log("セッションを無効化しました");
+        }
+    }
+#endif
+
     private void OnApplicationPause(bool pauseStatus)
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
-        // WebGLでポーズ状態になった場合
+        // WebGLでポーズ状態になった場合の処理を改善
         if (pauseStatus)
         {
-            // セッションIDをクリア
-            PlayerPrefs.DeleteKey(SESSION_KEY);
+            Debug.Log("アプリケーションがポーズされました");
+            // 即座に無効化せず、少し待つ
+            StartCoroutine(DelayedSessionInvalidation());
+        }
+        else
+        {
+            Debug.Log("アプリケーションのポーズが解除されました");
+            PlayerPrefs.SetInt(SESSION_VALID_KEY, 1);
             PlayerPrefs.Save();
         }
+#endif
+    }
+
+    // シーン遷移時にセッションを維持するメソッド
+    public void OnSceneTransition()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // 通常のシーン遷移であることを明示的に記録
+        PlayerPrefs.SetInt(SESSION_VALID_KEY, 1);
+        PlayerPrefs.Save();
+        Debug.Log("シーン遷移: セッションを有効に保持");
 #endif
     }
 
@@ -101,15 +170,27 @@ public class GameManager : MonoBehaviour
     {
         hasResetThisPlaySession = false;
         currentSessionId = null;
+        instance = null;
     }
 #endif
 
     private void UpdateStageButtons()
     {
-        // 通常のステージボタンの制御
-        if (stage1Button != null) stage1Button.interactable = true;
-        if (stage2Button != null) stage2Button.interactable = stage1Cleared;
-        if (stage3Button != null) stage3Button.interactable = stage2Cleared;
+        // ボタンがnullでないかチェックしてから操作
+        if (stage1Button != null)
+        {
+            stage1Button.interactable = true;
+        }
+
+        if (stage2Button != null)
+        {
+            stage2Button.interactable = stage1Cleared;
+        }
+
+        if (stage3Button != null)
+        {
+            stage3Button.interactable = stage2Cleared;
+        }
 
         // BossButtonの表示制御
         if (BossButton != null)
@@ -191,5 +272,14 @@ public class GameManager : MonoBehaviour
     public void CheckPlayerPrefs()
     {
         Debug.Log($"現在のPlayerPrefs - Stage1: {PlayerPrefs.GetInt("Stage1Cleared", -1)}, Stage2: {PlayerPrefs.GetInt("Stage2Cleared", -1)}, Stage3: {PlayerPrefs.GetInt("Stage3Cleared", -1)}");
+        Debug.Log($"セッション状態 - SessionValid: {PlayerPrefs.GetInt(SESSION_VALID_KEY, -1)}, SessionID: {PlayerPrefs.GetString(SESSION_KEY, "none")}");
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
     }
 }

@@ -23,7 +23,6 @@ public class EnemyHealth : MonoBehaviour
         if (collision.gameObject.CompareTag("Punch"))
         {
             healthSlider.value -= 10f;
-            Debug.Log("10‚Ìƒ_ƒ[ƒW");
         }
     }
 }

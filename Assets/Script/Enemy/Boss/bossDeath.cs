@@ -34,24 +34,6 @@ public class bossDeath : MonoBehaviour
 
     void Update()
     {
-        // デバッグ用：キー入力をチェック
-       /* if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("スペースキーが押されました！");
-
-            if (!isTriggered)
-            {
-                Debug.Log("ゲームクリアを発動します");
-                TriggerGameClear();
-            }
-            else
-            {
-                Debug.Log("既に発動済みのため無視されました");
-            }
-        }*/
-
-        // 実際の使用例：特定のオブジェクトを探す
-        
         if (GameObject.FindWithTag("GameClear") != null && !isTriggered)
         {
             TriggerGameClear();
@@ -61,7 +43,6 @@ public class bossDeath : MonoBehaviour
 
     public void TriggerGameClear()
     {
-        Debug.Log("TriggerGameClear が呼ばれました");
 
         if (isTriggered)
         {

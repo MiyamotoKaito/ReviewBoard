@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
         if (!mainCamera) //もし入れ忘れたらメインカメラを入れる
         {
             mainCamera = Camera.main;
-            Debug.LogWarning($"{name}の{nameof(mainCamera)}がアサインされていませんでした");
         }
 
         punchTimer2 = Time.time;
@@ -36,7 +35,6 @@ public class PlayerController : MonoBehaviour
     {
         if (punchTimer2 <= Time.time)
         {
-           // Debug.Log("クールダウンリセット");
             punchTimer2 = Time.time + punchCooldown;
         }
 
@@ -54,18 +52,6 @@ public class PlayerController : MonoBehaviour
                 Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
                 Instantiate(RightHand, worldPos, Quaternion.identity);
             }
-
-           //if (Input.GetMouseButtonDown(0))
-           // {
-           //     punchTimer = 0f;
-
-           //     Vector3 mousePos = Input.mousePosition;
-           //     mousePos.z = 10f;
-           //     mousePos.y = -2f;
-
-           //     Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
-           //     Instantiate(LeftHand, worldPos, Quaternion.identity);
-           // }
         }
     }
 }

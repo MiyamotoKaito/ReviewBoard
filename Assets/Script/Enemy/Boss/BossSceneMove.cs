@@ -29,7 +29,7 @@ public class BossSceneMove : MonoBehaviour
         // テキスト設定
         if (enemyText != null)
         {
-            enemyText.text = "ｶｯ!!";
+            enemyText.text = "!!";
         }
 
         // 少し遅れてUIを表示（ボスが死んだ演出の後）
